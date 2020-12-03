@@ -104,14 +104,15 @@ void alquilarLocal(Local **mall, int pisos, int locales){
 				fflush(stdin);
 				break;
 			}
+			else if(pagoDisponible == 0){
+				printf("\nLo sentimos, su capacidad de pago (%d) no es suficiente para alquilar el local %d en el piso %d\n", capacidadPago, elegirLocal, pisoAlquilar);
+			}
 				
 		}
+		
 	}
 	if(localDisponible == 0){
 		printf("\nLo sentimos, ese local ya esta ocupado o no hay disponibilidad en ese piso (%d)\n", pisoAlquilar);
-	}
-	else if(pagoDisponible == 0){
-		printf("\nSu capacidad de pago (%d) no es suficiente para alquilar el local %d en el piso %d\n", capacidadPago, elegirLocal, pisoAlquilar);
 	}
 }
 
@@ -280,6 +281,8 @@ void modificarEstadoLocales(Local **mall, int pisos, int locales){
 	fflush(stdin);
 	
 	int modificado = 0;
+	
+	char texto[] = "UNKNOWN";
 	for(i = 0; i < localesAModificar; i++){
 		printf("\nDigite el codigo postal del local a modificar: " );
 		scanf("%d", &digitarCodPostal);
@@ -290,6 +293,7 @@ void modificarEstadoLocales(Local **mall, int pisos, int locales){
 				fflush(stdin);
 				fgets(mall[pisoAModificar][j].nombre, 30, stdin);
 				fflush(stdin);*/
+				strcpy(mall[pisoAModificar][j].nombre, texto);
 				mall[pisoAModificar][j].estado = LIBRE;
 				modificado = 1;
 			}
