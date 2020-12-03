@@ -1,5 +1,7 @@
 #include"centroComercial.h"
 
+// 				CENTRO COMERCIAL
+
 void mostrarDatosCentroComercial(Local **mall, int pisos, int locales){
 	int i, j;
 	fflush(stdin);
@@ -444,13 +446,52 @@ void crearCentroComercial(){
 	menuCentroComercial(centroComercial, pisos, locales);
 }
 
+// 				PARQUEADERO 
+
+void mostrarDatosParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
+	int i;
+	fflush(stdin);
+	if(parqueadero != NULL){
+		printf("ESTADOS\nLIBRE = 0  OCUPADO = 1");
+		for(i = 0; i < cantParqueaderos; i++){
+			printf("\n\nID: %d", parqueadero[i].IDParqueadero);
+			printf("\nTipo de vehiculo: %s", parqueadero[i].tipoVehiculo);
+			printf("\nEstado: %d", parqueadero[i].estado);
+			
+		}
+		printf("\n");
+	}
+	else{
+		printf("\nMemoria Insuficiente\n");
+	}
+}
+
+void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
+	int elegirParqueo, i, j, lugarDisponible;
+	
+	
+	do{	
+		system("cls");
+		printf("Total de parqueaderos: %d", cantParqueaderos);
+		printf("\nLos parqueadero inician desde el numero 0");
+		printf("\n\nParqueadero en el que desea ubicarse: ");
+		scanf("%d", &elegirParqueo);
+		
+		if(elegirParqueo >= cantParqueaderos || elegirParqueo < 0){
+			printf("\nNumero de parqueadero no valido. Intente nuevamente\n");
+			system("pause");
+		}
+		
+	}while(elegirParqueo >= cantParqueaderos || elegirParqueo < 0);
+}
+
 void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 	int opcion;
 
 	do{
 		system("cls");
-		printf("1. Opcion 1\n");
-		
+		printf("1. Ingresar vehiculo\n");
+		printf("2. Mostrar Datos Parqueadero\n");
 		printf("0. Salir\n");
 		printf("Que quieres: ");
 		scanf("%d", &opcion);
@@ -461,9 +502,16 @@ void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 			
 			case 1:
 				system("cls");
-				printf("opcion 1\n");
+				ingresarVehiculo(parqueadero, cantParqueaderos);
 				system("pause");
 				break;
+				
+			case 2:
+				system("cls");
+				mostrarDatosParqueadero(parqueadero, cantParqueaderos);
+				system("pause");
+				break;
+				
 			default:
 				printf("\nOpcion no valida. Intente de nuevo\n");
 				system("pause");
