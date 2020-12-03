@@ -452,7 +452,7 @@ void mostrarDatosParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 	int i;
 	fflush(stdin);
 	if(parqueadero != NULL){
-		printf("ESTADOS\nLIBRE = 0  OCUPADO = 1");
+		printf("ESTADOS\nLIBRE = 0  OCUPADO = 1\nPares: CARROS   IMPARES: MOTOS");
 		for(i = 0; i < cantParqueaderos; i++){
 			printf("\n\nID: %d", parqueadero[i].IDParqueadero);
 			printf("\nTipo de vehiculo: %s", parqueadero[i].tipoVehiculo);
@@ -483,6 +483,8 @@ void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 		}
 		
 	}while(elegirParqueo >= cantParqueaderos || elegirParqueo < 0);
+	
+	lugarDisponible = 0;
 }
 
 void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
@@ -544,11 +546,18 @@ void crearParqueadero(){
 	Parqueadero *parqueadero;
 	parqueadero = malloc( cantParqueaderos * sizeof(Parqueadero) );
 	
-	char texto[]= "UNKNOWN";
+	char carro[]= "CARRO";
+	char moto[]= "MOTO";
 	if(parqueadero != NULL){
 		for(i = 0; i < cantParqueaderos; i++){
 			parqueadero[i].IDParqueadero = i;
-			strcpy(parqueadero[i].tipoVehiculo, texto);
+			if(parqueadero[i].IDParqueadero % 2 == 0){
+				strcpy(parqueadero[i].tipoVehiculo, carro);
+			}
+			else{
+				strcpy(parqueadero[i].tipoVehiculo, moto);
+			}
+			
 			parqueadero[i].estado = LIBRE;
 		}
 	}
