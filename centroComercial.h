@@ -5,7 +5,7 @@
 typedef enum{ 
 	LIBRE, //0
 	OCUPADO //1 
-}estadoLocal;
+}estadoLocal, estadoParqueadero;
 
 typedef struct Local{
 	char nombre[30];
@@ -16,6 +16,14 @@ typedef struct Local{
 	
 }Local;
 
+typedef struct parking{
+	int IDParqueadero;
+	char tipoVehiculo[10];
+	estadoParqueadero estado;
+	
+}Parqueadero;
+
+//				MALL
 
 void mostrarDatosCentroComercial(Local **mall, int pisos, int locales);
 
@@ -36,3 +44,8 @@ void guardar(Local **mall, int pisos, int locales);
 void menuCentroComercial();
 
 void crearCentroComercial();
+
+
+// PARQUEADERO
+
+void crearParqueadero();
