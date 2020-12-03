@@ -23,6 +23,8 @@ typedef struct parking{
 	
 }Parqueadero;
 
+void menuGeneral();
+
 //				MALL
 
 void mostrarDatosCentroComercial(Local **mall, int pisos, int locales);
@@ -49,3 +51,5 @@ void crearCentroComercial();
 // PARQUEADERO
 
 void crearParqueadero();
+
+void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos);
