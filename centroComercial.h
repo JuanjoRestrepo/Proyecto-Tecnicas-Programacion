@@ -29,9 +29,10 @@ void ordenarPiso(Local **centroComercial, int pisos, int locales);
 
 void modificarInformacionLocales(Local **mall, int pisos, int locales);
 
+void modificarEstadoLocales(Local **mall, int pisos, int locales);
+
 void guardar(Local **mall, int pisos, int locales);
 
-void menuPrincipal();
+void menuCentroComercial();
 
 void crearCentroComercial();
-
