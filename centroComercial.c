@@ -1,6 +1,6 @@
 #include"centroComercial.h"
 
-// 				CENTRO COMERCIAL
+// 	================================	CENTRO COMERCIAL		================================
 
 void mostrarDatosCentroComercial(Local **mall, int pisos, int locales){
 	int i, j;
@@ -446,7 +446,7 @@ void crearCentroComercial(){
 	menuCentroComercial(centroComercial, pisos, locales);
 }
 
-// 				PARQUEADERO 
+// 	================================	PARQUEADERO 	================================
 
 void mostrarDatosParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 	int i;
@@ -468,7 +468,11 @@ void mostrarDatosParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 
 void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 	int elegirParqueo, i, j, lugarDisponible;
+	char tipo[10];
 	
+	system("cls");
+	printf("\nTipo de vehiculo: ");
+	scanf("%s", &tipo);
 	
 	do{	
 		system("cls");
@@ -485,6 +489,21 @@ void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 	}while(elegirParqueo >= cantParqueaderos || elegirParqueo < 0);
 	
 	lugarDisponible = 0;
+	//QUEDE AQUI 11:00 PM 12/2/2020
+	for(i = 0; i < cantParqueaderos; i++){
+		
+		if(parqueadero[i].estado == LIBRE && parqueadero[i].IDParqueadero % 2 == 0){
+			lugarDisponible = 1;
+			parqueadero[i].estado = OCUPADO;
+			break;
+		}
+		else{
+			lugarDisponible = 1;
+			parqueadero[i].estado = OCUPADO;
+			break;
+		}
+	}
+	
 }
 
 void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
