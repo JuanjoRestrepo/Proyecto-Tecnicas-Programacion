@@ -55,12 +55,12 @@ void alquilarLocal(Local **mall, int pisos, int locales){
 		printf("\n\nPiso en el que desea alquilar el local: ");
 		scanf("%d", &pisoAlquilar);
 		
-		if(pisoAlquilar > pisos || pisoAlquilar < 0){
+		if(pisoAlquilar >= pisos || pisoAlquilar < 0){
 			printf("\nNumero de piso no valido. Intente nuevamente\n");
 			system("pause");
 		}
 		
-	}while(pisoAlquilar > pisos || pisoAlquilar < 0);
+	}while(pisoAlquilar >= pisos || pisoAlquilar < 0);
 	
 	fflush(stdin);
 	int capacidadPago = 0;
@@ -95,7 +95,7 @@ void alquilarLocal(Local **mall, int pisos, int locales){
 				fflush(stdin);
 				fgets(mall[pisoAlquilar][j].nombre, 30, stdin);
 				fflush(stdin);
-				printf("El codigo postal del local es: %d", mall[pisoAlquilar][j].codigoPostal);
+				printf("\nEl codigo postal del local es: %d", mall[pisoAlquilar][j].codigoPostal);
 				printf("\nSu local se ubica en el piso #%d \n", mall[pisoAlquilar][j].piso );
 				mall[pisoAlquilar][j].estado = OCUPADO;
 				
@@ -135,12 +135,12 @@ void ordenarPiso(Local **mall, int pisos, int locales){
 		printf("\nQue piso quiere ordenar: ");
 		scanf("%d", &elegirPiso);
 		
-		if(elegirPiso > pisos || elegirPiso < 0){
+		if(elegirPiso >= pisos || elegirPiso < 0){
 			printf("\nNumero de piso no valido. Intente nuevamente\n");
 			system("pause");
 		}
 		
-	}while(elegirPiso > pisos || elegirPiso < 0);
+	}while(elegirPiso >= pisos || elegirPiso < 0);
 	
 	fflush(stdin);
 	int temp;
@@ -172,12 +172,12 @@ void modificarInformacionLocales(Local **mall, int pisos, int locales){
 		printf("\nEn cual piso desea modificar: ");
 		scanf("%d", &pisoAModificar);
 		
-		if(pisoAModificar > pisos || pisoAModificar < 0){
+		if(pisoAModificar >= pisos || pisoAModificar < 0){
 			printf("\nNumero de piso no valido. Intente nuevamente\n");
 			system("pause");
 		}
 		
-	}while(pisoAModificar > pisos || pisoAModificar < 0);
+	}while(pisoAModificar >= pisos || pisoAModificar < 0);
 	
 	fflush(stdin);
 	
@@ -207,21 +207,101 @@ void modificarInformacionLocales(Local **mall, int pisos, int locales){
 	
 	fflush(stdin);
 	
+	int modificado = 0;
 	for(i = 0; i < localesAModificar; i++){
 		printf("\nDigite el codigo postal del local a modificar: " );
 		scanf("%d", &digitarCodPostal);
-		for(j = 0; j < localesOcupados; j++){
+		fflush(stdin);
+		for(j = 0; j <= localesOcupados; j++){
 		
 			if(mall[pisoAModificar][j].estado == OCUPADO && mall[pisoAModificar][j].codigoPostal == digitarCodPostal){
 				printf("\nNombre nuevo del local %d [MAX 30]: ", j+1);
 				fflush(stdin);
 				fgets(mall[pisoAModificar][j].nombre, 30, stdin);
 				fflush(stdin);
+				modificado = 1;
+			}
+			
+		}
+	}
+	if(modificado == 1){
+		printf("\nSe modifico el nombre exitosamente\n");
+	}
+	else if(modificado == 0){
+		printf("\nNo se pudo modificar el nombre del local\n");
+	}
+	
+	
+}
+
+void modificarEstadoLocales(Local **mall, int pisos, int locales){
+	int i, j, localesAModificar, pisoAModificar; 
+	
+	do{	
+		system("cls");
+		printf("Total de pisos del Mall: %d", pisos);
+		printf("\nLos pisos inician desde el numero 0\n");
+		printf("\nEn cual piso desea modificar: ");
+		scanf("%d", &pisoAModificar);
+		
+		if(pisoAModificar >= pisos || pisoAModificar < 0){
+			printf("\nNumero de piso no valido. Intente nuevamente\n");
+			system("pause");
+		}
+		
+	}while(pisoAModificar >= pisos || pisoAModificar < 0);
+	
+	fflush(stdin);
+	
+	int localesOcupados = 0;
+	for(j = 0; j < locales; j++){
+		if(mall[pisoAModificar][j].estado == OCUPADO ){
+			localesOcupados++;
+		}
+	}
+	
+	printf("\nHay %d local(es) ocupados en el piso %d\n", localesOcupados, pisoAModificar );
+	system("pause");
+	
+	do{
+		system("cls");
+		printf("\nCuantos locales desea desocupar en el piso: %d: ", pisoAModificar);
+		scanf("%d", &localesAModificar);
+		
+		if(localesAModificar > localesOcupados || localesAModificar < 0){
+			printf("\nNumero de locales no valido. Intente nuevamente\n");
+			system("pause");
+		}
+		
+	}while(localesAModificar > localesOcupados || localesAModificar < 0);
+	
+	int digitarCodPostal;
+	
+	fflush(stdin);
+	
+	int modificado = 0;
+	for(i = 0; i < localesAModificar; i++){
+		printf("\nDigite el codigo postal del local a modificar: " );
+		scanf("%d", &digitarCodPostal);
+		fflush(stdin);
+		for(j = 0; j <= localesOcupados; j++){
+			if(mall[pisoAModificar][j].estado == OCUPADO && mall[pisoAModificar][j].codigoPostal == digitarCodPostal){
+				/*printf("\nNombre nuevo del local %d [MAX 30]: ", j+1);
+				fflush(stdin);
+				fgets(mall[pisoAModificar][j].nombre, 30, stdin);
+				fflush(stdin);*/
+				mall[pisoAModificar][j].estado = LIBRE;
+				modificado = 1;
 			}
 		}
 	}
 	
-	printf("\nSe modifico el nombre exitosamente\n");
+	if(modificado == 1){
+		printf("\nEstados modificados exitosamente\n");
+	}
+	else if(modificado == 0){
+		printf("\nNo se pudo modificar el estado del local\n");
+	}
 	
 }
 
@@ -236,7 +316,7 @@ void guardar(Local **mall, int pisos, int locales){
              fwrite( mall[i] , sizeof( Local ), locales, archivo);
         }
         fclose( archivo );
-        printf("\nArchivo guarado con exito!\n");
+        printf("\nArchivo guardado con exito!\n");
     }
     else{
         printf("\nERROR - No existen datos\n");
@@ -256,6 +336,7 @@ void menuPrincipal(Local **centroComercial, int pisos, int locales){
 		printf("3. Ordenar Por Costo De Arriendo\n");
 		printf("4. Crear Reporte\n");
 		printf("5. Modificar Locales\n");
+		printf("6. Modificar Estados\n");
 		printf("0. Salir\n");
 		printf("Que quieres: ");
 		scanf("%d", &opcion);
@@ -292,6 +373,13 @@ void menuPrincipal(Local **centroComercial, int pisos, int locales){
 				modificarInformacionLocales(centroComercial, pisos, locales);
 				system("pause");
 				break;
+			
+			case 6:
+				system("cls");
+				modificarEstadoLocales(centroComercial, pisos, locales);
+				system("pause");
+				break;	
+			
 			default:
 				printf("\nOpcion no valida. Intente de nuevo\n");
 				system("pause");
