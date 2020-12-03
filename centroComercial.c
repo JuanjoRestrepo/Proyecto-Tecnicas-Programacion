@@ -169,7 +169,7 @@ void modificarInformacionLocales(Local **mall, int pisos, int locales){
 		system("cls");
 		printf("Total de pisos del Mall: %d", pisos);
 		printf("\nLos pisos inician desde el numero 0\n");
-		printf("\nEn cual piso quiere modificar: ");
+		printf("\nEn cual piso desea modificar: ");
 		scanf("%d", &pisoAModificar);
 		
 		if(pisoAModificar > pisos || pisoAModificar < 0){
@@ -190,7 +190,7 @@ void modificarInformacionLocales(Local **mall, int pisos, int locales){
 	
 	printf("\nHay %d local(es) ocupados en el piso %d\n", localesOcupados, pisoAModificar );
 	system("pause");
-	/*
+	
 	do{
 		system("cls");
 		printf("\nCuantos locales desea modificar en el piso %d: ", pisoAModificar);
@@ -201,24 +201,26 @@ void modificarInformacionLocales(Local **mall, int pisos, int locales){
 			system("pause");
 		}
 		
-	}while(localesAModificar > localesOcupados || localesAModificar < 0);*/
+	}while(localesAModificar > localesOcupados || localesAModificar < 0);
 	
 	int digitarCodPostal;
 	
-	printf("\nDigite el codigo postal del local a modificar: ", j);
-	scanf("%d", &digitarCodPostal);
-	
 	fflush(stdin);
 	
-	for(j = 0; j < localesOcupados; j++){
+	for(i = 0; i < localesAModificar; i++){
+		printf("\nDigite el codigo postal del local a modificar: " );
+		scanf("%d", &digitarCodPostal);
+		for(j = 0; j < localesOcupados; j++){
 		
-		if(mall[pisoAModificar][j].estado == OCUPADO && mall[pisoAModificar][j].codigoPostal == digitarCodPostal){
-			printf("\nNombre nuevo del local %d [MAX 30]: ", j+1);
-			fflush(stdin);
-			fgets(mall[pisoAModificar][j].nombre, 30, stdin);
-			fflush(stdin);
+			if(mall[pisoAModificar][j].estado == OCUPADO && mall[pisoAModificar][j].codigoPostal == digitarCodPostal){
+				printf("\nNombre nuevo del local %d [MAX 30]: ", j+1);
+				fflush(stdin);
+				fgets(mall[pisoAModificar][j].nombre, 30, stdin);
+				fflush(stdin);
+			}
 		}
 	}
+	
 	printf("\nSe modifico el nombre exitosamente\n");
 	
 }
@@ -350,7 +352,6 @@ void crearCentroComercial(){
 	
 	menuPrincipal(centroComercial, pisos, locales);
 }
-
 
 
 
