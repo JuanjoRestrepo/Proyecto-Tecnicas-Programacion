@@ -242,7 +242,7 @@ void modificarEstadoLocales(Local **mall, int pisos, int locales){
 		system("cls");
 		printf("Total de pisos del Mall: %d", pisos);
 		printf("\nLos pisos inician desde el numero 0\n");
-		printf("\nEn cual piso desea modificar: ");
+		printf("\nEn cual piso desea desocupar: ");
 		scanf("%d", &pisoAModificar);
 		
 		if(pisoAModificar >= pisos || pisoAModificar < 0){
@@ -289,17 +289,16 @@ void modificarEstadoLocales(Local **mall, int pisos, int locales){
 		fflush(stdin);
 		for(j = 0; j <= localesOcupados; j++){
 			if(mall[pisoAModificar][j].estado == OCUPADO && mall[pisoAModificar][j].codigoPostal == digitarCodPostal){
-				/*printf("\nNombre nuevo del local %d [MAX 30]: ", j+1);
-				fflush(stdin);
-				fgets(mall[pisoAModificar][j].nombre, 30, stdin);
-				fflush(stdin);*/
+	
 				strcpy(mall[pisoAModificar][j].nombre, texto);
 				mall[pisoAModificar][j].estado = LIBRE;
 				modificado = 1;
+				fflush(stdin);
+				break;
 			}
+			
 		}
 	}
-	
 	if(modificado == 1){
 		printf("\nEstados modificados exitosamente\n");
 	}
@@ -329,7 +328,7 @@ void guardar(Local **mall, int pisos, int locales){
     
 }	
 
-void menuPrincipal(Local **centroComercial, int pisos, int locales){
+void menuCentroComercial(Local **centroComercial, int pisos, int locales){
 	
 	int opcion;
 
@@ -442,10 +441,7 @@ void crearCentroComercial(){
 	printf("\nInicializando costos de arriendo de cada local\n");
 	inicializarCostoArriendo(centroComercial, pisos, locales);
 	
-	menuPrincipal(centroComercial, pisos, locales);
+	menuCentroComercial(centroComercial, pisos, locales);
 }
-
-
-
 
 
