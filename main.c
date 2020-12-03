@@ -1,10 +1,10 @@
 #include"centroComercial.h"
 
 int main(){
-	
-	crearCentroComercial();
 
-	printf("Memoria Liberada\n");
+	menuGeneral();
+
+	printf("\nMemoria Liberada\n");
 	
 	return 0;	
 }
