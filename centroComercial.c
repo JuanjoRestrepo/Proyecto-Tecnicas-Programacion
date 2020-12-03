@@ -444,4 +444,35 @@ void crearCentroComercial(){
 	menuCentroComercial(centroComercial, pisos, locales);
 }
 
-
+void crearParqueadero(){
+	int cantParqueaderos, i;
+	
+	do{
+		system("cls");
+		printf("\n*** Crear Parqueadero ***\n");
+		printf("Numeros de parqueaderos: ");
+		scanf("%d", &cantParqueaderos);
+		
+		if( cantParqueaderos <= 0 ){
+			printf("Las cantidades deben ser positivas\nIntente nuevamente\n\n");
+			system("pause");
+		}
+		
+	}while(cantParqueaderos <= 0);
+	
+	Parqueadero *parqueadero;
+	parqueadero = malloc( cantParqueaderos * sizeof(Parqueadero) );
+	
+	char texto[]= "UNKNOWN";
+	if(parqueadero != NULL){
+		for(i = 0; i < cantParqueaderos; i++){
+			parqueadero[i].IDParqueadero = i;
+			strcpy(parqueadero[i].tipoVehiculo, texto);
+			parqueadero[i].estado = LIBRE;
+		}
+	}
+	
+	printf("Se ha creado un centro comercial\n");
+	system("pause");
+	
+}
