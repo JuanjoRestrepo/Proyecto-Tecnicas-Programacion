@@ -390,7 +390,7 @@ void menuCentroComercial(Local **centroComercial, int pisos, int locales){
 		
 	}while(opcion != 0);
 	
-	printf("\nPrograma finalizado\n");
+	printf("\nCentro comercial Liberado\n");
 	free(centroComercial);
 }
 
@@ -422,7 +422,7 @@ void crearCentroComercial(){
 			centroComercial[i] =  malloc( locales * sizeof(Local ) );
 		}	
 	}
-	printf("Se ha creado un centro comercial\n");
+	printf("\nSe ha creado un centro comercial\n");
 	system("pause");
 	
 	char texto[] = "UNKNOWN";
@@ -442,6 +442,39 @@ void crearCentroComercial(){
 	inicializarCostoArriendo(centroComercial, pisos, locales);
 	
 	menuCentroComercial(centroComercial, pisos, locales);
+}
+
+void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
+	int opcion;
+
+	do{
+		system("cls");
+		printf("1. Opcion 1\n");
+		
+		printf("0. Salir\n");
+		printf("Que quieres: ");
+		scanf("%d", &opcion);
+		fflush(stdin);
+		switch(opcion){
+			case 0:
+				break;
+			
+			case 1:
+				system("cls");
+				printf("opcion 1\n");
+				system("pause");
+				break;
+			default:
+				printf("\nOpcion no valida. Intente de nuevo\n");
+				system("pause");
+		}
+		
+				
+	}while(opcion != 0);
+	
+	printf("\nParqueadero Liberado\n");
+	system("pause");
+	free(parqueadero);
 }
 
 void crearParqueadero(){
@@ -472,7 +505,41 @@ void crearParqueadero(){
 		}
 	}
 	
-	printf("Se ha creado un centro comercial\n");
+	printf("\nSe ha creado un parqueadero\n");
 	system("pause");
 	
+	menuParqueadero(parqueadero, cantParqueaderos);
 }
+
+void menuGeneral(){
+	int opcion;
+	
+	do{
+		system("cls");
+		printf("1. Parqueadero\n");
+		printf("2. Centro Comercial\n");
+		printf("0. Terminar Programa\n");
+		printf("Que quieres: ");
+		scanf("%d", &opcion);
+		fflush(stdin);
+		switch(opcion){
+			
+			case 0:
+				break;
+				
+			case 1:
+				crearParqueadero();
+				break;
+				
+			case 2:
+				crearCentroComercial();
+				break;
+				
+			default:
+				printf("\nOpcion no valida. Intente de nuevo\n");
+				system("pause");
+		}
+		
+	}while(opcion != 0);
+}
+
