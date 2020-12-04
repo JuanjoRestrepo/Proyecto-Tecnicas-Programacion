@@ -468,15 +468,28 @@ void mostrarDatosParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 
 void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 	int elegirParqueo, i, j, lugarDisponible;
-	char tipo[10];
+	int tipo = 0;	
 	
-	system("cls");
-	printf("\nTipo de vehiculo: ");
-	scanf("%s", &tipo);
+	fflush(stdin);
+	do{
+		printf("\nQue clase de vehiculo tiene?\n");
+		printf("CARRO = 1,	MOTO = 2");
+		printf("\nTipo de vehiculo: ");
+		scanf("%d", &tipo);
+		
+		if(tipo != 1 && tipo != 2){
+			printf("\nLo sentimos, solo puede ingresar esos dos tipos de vehiculos\n");
+			system("pause");
+			system("cls");
+		}
+		
+	}while(tipo != 1 && tipo != 2);
 	
-	do{	
-		system("cls");
-		printf("Total de parqueaderos: %d", cantParqueaderos);
+	fflush(stdin);
+	do{
+			
+		printf("\nTotal de parqueaderos: %d", cantParqueaderos);
+		printf("\nCarros ->Pares		Motos ->Impares\n");
 		printf("\nLos parqueadero inician desde el numero 0");
 		printf("\n\nParqueadero en el que desea ubicarse: ");
 		scanf("%d", &elegirParqueo);
@@ -484,24 +497,54 @@ void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 		if(elegirParqueo >= cantParqueaderos || elegirParqueo < 0){
 			printf("\nNumero de parqueadero no valido. Intente nuevamente\n");
 			system("pause");
+			system("cls");
 		}
 		
 	}while(elegirParqueo >= cantParqueaderos || elegirParqueo < 0);
 	
 	lugarDisponible = 0;
-	//QUEDE AQUI 11:00 PM 12/2/2020
+	//QUEDE AQUI 11:00 PM 12/2/2020s
 	for(i = 0; i < cantParqueaderos; i++){
+		fflush(stdin);
+		if(tipo == 1 && elegirParqueo % 2 == 0 ){
+			if(parqueadero[i].estado == LIBRE && parqueadero[i].IDParqueadero == elegirParqueo ){
+				lugarDisponible = 1;
+				parqueadero[i].estado = OCUPADO;
+				printf("\nCarro ubicado exitosamente\n");
+				printf("Se ubica en el lugar #%d\n",parqueadero[i].IDParqueadero);
+				break;
+			}
+			else if(parqueadero[i].estado == OCUPADO && parqueadero[i].IDParqueadero == elegirParqueo){
+				printf("\nParqueadero Ocupado\n");
+			}
+			
+		}
+		else if(tipo == 1 && elegirParqueo % 2 != 0 ){
+			printf("\nLa ubicacion digitada es para Motos\n");
+			break;
+		}
 		
-		if(parqueadero[i].estado == LIBRE && parqueadero[i].IDParqueadero % 2 == 0){
-			lugarDisponible = 1;
-			parqueadero[i].estado = OCUPADO;
+		else if(tipo == 2 && elegirParqueo % 2 != 0 ){
+			if(parqueadero[i].estado == LIBRE && parqueadero[i].IDParqueadero == elegirParqueo){
+				lugarDisponible = 1;
+				parqueadero[i].estado = OCUPADO;
+				printf("\nMoto ubicada exitosamente\n");
+				printf("Se ubica en el lugar #%d\n",parqueadero[i].IDParqueadero);
+				break;
+			}
+			else if(parqueadero[i].estado == OCUPADO && parqueadero[i].IDParqueadero == elegirParqueo){
+				printf("\nParqueadero Ocupado\n");
+			}
+			
+		}
+		else if(tipo == 2 && elegirParqueo % 2 == 0 ){
+			printf("\nLa ubicacion digitada es para Carros\n");
 			break;
 		}
-		else{
-			lugarDisponible = 1;
-			parqueadero[i].estado = OCUPADO;
-			break;
-		}
+		
+	}
+	if(lugarDisponible == 0){
+		printf("No se pudo ubicar su vehiculo\n\n");		
 	}
 	
 }
