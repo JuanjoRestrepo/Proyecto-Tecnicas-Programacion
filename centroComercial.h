@@ -50,11 +50,13 @@ void crearCentroComercial();
 
 // PARQUEADERO
 
-void crearParqueadero();
+void mostrarEstados(Parqueadero *parqueadero, int cantParqueaderos);
+
+void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos);
+
+int porcentajeOcupacion(Parqueadero *parqueadero, int cantParqueaderos);
 
 void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos);
 
-void mostrarDatosParqueadero(Parqueadero *parqueadero, int cantParqueaderos);
-
-void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos);
+void crearParqueadero();
 
