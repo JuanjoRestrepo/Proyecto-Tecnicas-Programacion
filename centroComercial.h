@@ -53,3 +53,8 @@ void crearCentroComercial();
 void crearParqueadero();
 
 void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos);
+
+void mostrarDatosParqueadero(Parqueadero *parqueadero, int cantParqueaderos);
+
+void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos);
+
