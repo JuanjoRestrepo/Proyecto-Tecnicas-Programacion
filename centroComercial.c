@@ -503,9 +503,11 @@ void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 	}while(elegirParqueo >= cantParqueaderos || elegirParqueo < 0);
 	
 	lugarDisponible = 0;
-	//QUEDE AQUI 11:00 PM 12/2/2020s
+
 	for(i = 0; i < cantParqueaderos; i++){
 		fflush(stdin);
+		
+		//Analiza si es carro y si la posicion de parqueo es par
 		if(tipo == 1 && elegirParqueo % 2 == 0 ){
 			if(parqueadero[i].estado == LIBRE && parqueadero[i].IDParqueadero == elegirParqueo ){
 				lugarDisponible = 1;
@@ -514,16 +516,18 @@ void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 				printf("Se ubica en el lugar #%d\n",parqueadero[i].IDParqueadero);
 				break;
 			}
+			//Si esa ubicacion ya esta ocupada
 			else if(parqueadero[i].estado == OCUPADO && parqueadero[i].IDParqueadero == elegirParqueo){
 				printf("\nParqueadero Ocupado\n");
 			}
 			
 		}
+		//Analiza si es carro y si la posicion de parqueo no es par
 		else if(tipo == 1 && elegirParqueo % 2 != 0 ){
 			printf("\nLa ubicacion digitada es para Motos\n");
 			break;
 		}
-		
+		//Analiza si es moto y si la posicion de parqueo es impar
 		else if(tipo == 2 && elegirParqueo % 2 != 0 ){
 			if(parqueadero[i].estado == LIBRE && parqueadero[i].IDParqueadero == elegirParqueo){
 				lugarDisponible = 1;
@@ -532,11 +536,13 @@ void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 				printf("Se ubica en el lugar #%d\n",parqueadero[i].IDParqueadero);
 				break;
 			}
+			//Si esa ubicacion ya esta ocupada
 			else if(parqueadero[i].estado == OCUPADO && parqueadero[i].IDParqueadero == elegirParqueo){
 				printf("\nParqueadero Ocupado\n");
 			}
 			
 		}
+		//Analiza si es moto y si la posicion de parqueo es par
 		else if(tipo == 2 && elegirParqueo % 2 == 0 ){
 			printf("\nLa ubicacion digitada es para Carros\n");
 			break;
