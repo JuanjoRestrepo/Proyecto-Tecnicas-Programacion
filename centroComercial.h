@@ -26,6 +26,8 @@ void alquilarLocal(Local **mall, int pisos, int locales);
 
 void mostrarCostosArriendoDescendentemente(Local **mall, int pisos, int locales, int pisoElegido);
 
+void swap(Local **mall, int pos1, int pos2, int piso);
+
 void ordenarPiso(Local **centroComercial, int pisos, int locales);
 
 void modificarInformacionLocales(Local **mall, int pisos, int locales);
