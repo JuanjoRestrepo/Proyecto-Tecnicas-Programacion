@@ -310,6 +310,7 @@ void modificarEstadoLocales(Local **mall, int pisos, int locales){
 	
 }
 
+
 void guardarArchivo(Local **mall, int pisos, int locales){
 	int i;
     FILE *archivo = fopen( "datosCentroComercial.dat" , "wb");
@@ -329,7 +330,6 @@ void guardarArchivo(Local **mall, int pisos, int locales){
     }
     
 }
-
 
 void cargarArchivo(Local **mall, int pisos, int locales){
 	int i;
@@ -352,12 +352,12 @@ void cargarArchivo(Local **mall, int pisos, int locales){
 	
 }
 
-void crearReporte(Local **mall, int pisos, int locales){
+void crearReporteGeneral(Local **mall, int pisos, int locales){
 	int i, j;
-	FILE *archivo = fopen( "Reporte.txt" , "wb");	
+	FILE *archivo = fopen( "ReporteGeneral.txt" , "wb");	
 	if(mall != NULL){
-		fprintf(archivo,"\n======== REPORTE ========\n");
-		fprintf( archivo, "========	  ========\n" );
+		fprintf(archivo,"\n======== REPORTE GENERAL ========\n");
+		fprintf( archivo, "==========	  		  ==========\n" );
 		for(i = 0; i < pisos; i++){
 			fprintf(archivo, "________________________\nPiso: %d", i);
 			for(j = 0; j < locales; j++){
@@ -375,6 +375,34 @@ void crearReporte(Local **mall, int pisos, int locales){
 	else{
 		printf("\nMemoria Insuficiente\n");
 	}
+}
+
+void reporteLocalesDisponibles(Local **mall, int pisos, int locales){
+	int i, j;
+	FILE *archivo = fopen( "Reporte Locales Disponibles.txt" , "wb");
+	if(mall != NULL){
+		fprintf(archivo,"\n======== REPORTE LOCALES DISPONIBLES ========\n");
+		fprintf( archivo, "==========	  		  ==========\n" );
+		for(i = 0; i < pisos; i++){
+			fprintf(archivo, "________________________\nPiso: %d", i);
+			for(j = 0; j < locales; j++){
+				if(mall[i][j].estado == 0){
+					fprintf(archivo, "\n\nNombre del local: %s", mall[i][j].nombre);
+					fprintf(archivo, "\nCodigo Postal: %d", mall[i][j].codigoPostal);
+					fprintf(archivo, "\nEstado: %d", mall[i][j].estado);
+					fprintf(archivo, "\nCosto de arriendo $: %d", mall[i][j].costoArriendo);
+				}
+			}
+			fprintf(archivo, "\n");
+		}
+		fprintf(archivo, "\n");
+		fclose(archivo);
+		printf("\n\nReporte creado exitosamente\n");
+	}
+	else{
+		printf("\nMemoria Insuficiente\n");
+	}		
+	
 }	
 
 void menuCentroComercial(Local **mall, int pisos, int locales){
@@ -387,10 +415,11 @@ void menuCentroComercial(Local **mall, int pisos, int locales){
 		printf("2. Mostrar Locales\n");
 		printf("3. Ordenar Por Costo De Arriendo\n");
 		printf("4. Guardar Archivos\n");
-		printf("5. Crear Reporte\n");
-		printf("6. Cargar Archivos\n");
-		printf("7. Modificar Nombre Locales\n");
-		printf("8. Desocupar Local\n");
+		printf("5. Crear Reporte Locales Disponibles\n");
+		printf("6. Crear Reporte General\n");
+		printf("7. Cargar Archivos\n");
+		printf("8. Modificar Nombre Locales\n");
+		printf("9. Desocupar Local\n");
 		printf("0. Salir\n");
 		printf("Que quieres: ");
 		scanf("%d", &opcion);
@@ -418,32 +447,41 @@ void menuCentroComercial(Local **mall, int pisos, int locales){
 				break;
 				
 			case 4:
+				
 				guardarArchivo(mall, pisos, locales);
 				system("pause");
 				break;
 				
-			case 5://Crear Reporte txt
-				crearReporte(mall, pisos, locales);
+			case 5://Crear Reporte Locales Disponibles txt
+				
+				reporteLocalesDisponibles(mall, pisos, locales);
 				system("pause");
 				break;
 				
-			case 6://Crear Reporte txt
-				cargarArchivo(mall, pisos, locales);
+			case 6://Crear Reporte txt General
+				
+				crearReporteGeneral(mall, pisos, locales);
 				system("pause");
 				break;
 			
 			case 7:
 				system("cls");
-				modificarInformacionLocales(mall, pisos, locales);
+				cargarArchivo(mall, pisos, locales);
 				system("pause");
 				break;
 			
-			case 8:
+			case 8://Cambiar Nombre Locales
 				system("cls");
-				modificarEstadoLocales(mall, pisos, locales);
+				modificarInformacionLocales(mall, pisos, locales);
 				system("pause");
 				break;	
 			
+			case 9://Desocupar Locales
+				system("cls");
+				modificarEstadoLocales(mall, pisos, locales);
+				system("pause");
+				break;
+				
 			default:
 				printf("\nOpcion no valida. Intente de nuevo\n");
 				system("pause");
@@ -506,38 +544,11 @@ void crearCentroComercial(){
 	menuCentroComercial(centroComercial, pisos, locales);
 	
 }
-/*
-void empezarDesdeCero(Local **centroComercial, int pisos, int locales){
-	int empezarDeCero;
-	
-	do{
-		
-		printf("\nDesea iniciar un centro comercial desde cero?\n(Si = 1, No = 0): ");
-		scanf("%d", &empezarDeCero);
-		if(empezarDeCero != 0 && empezarDeCero != 1){
-			printf("\nOpcion no valida. Debe elegir 1 o 0\n");
-			system("pause");
-		}
-		system("cls");
-		
-	}while(empezarDeCero != 0 && empezarDeCero != 1);
-	
-	//Aqui toy 10:40 AM
-	if(empezarDeCero == 0){
-		printf("\nElegiste Cero\n");
-		system("pause");
-		//cargarArchivo(centroComercial, pisos, locales);
-		//menuCentroComercial(centroComercial, pisos, locales);
-	}
-	else{
-		crearCentroComercial();
-	}
-}*/
 
 
 // 	================================	PARQUEADERO 	================================
 
-void mostrarEstados(Parqueadero *parqueadero, int cantParqueaderos){
+void mostrarEstadosParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 	int i;
 	fflush(stdin);
 	if(parqueadero != NULL){
@@ -703,7 +714,7 @@ void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 				
 			case 2:
 				system("cls");
-				mostrarEstados(parqueadero, cantParqueaderos);
+				mostrarEstadosParqueadero(parqueadero, cantParqueaderos);
 				system("pause");
 				break;
 					
