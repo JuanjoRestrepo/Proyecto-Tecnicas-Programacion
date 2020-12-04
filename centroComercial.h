@@ -41,7 +41,9 @@ void modificarInformacionLocales(Local **mall, int pisos, int locales);
 
 void modificarEstadoLocales(Local **mall, int pisos, int locales);
 
-void guardar(Local **mall, int pisos, int locales);
+void guardarArchivo(Local **mall, int pisos, int locales);
+
+void cargarArchivo(Local **mall, int pisos, int locales);
 
 void menuCentroComercial();
 
@@ -53,6 +55,8 @@ void crearCentroComercial();
 void mostrarEstados(Parqueadero *parqueadero, int cantParqueaderos);
 
 void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos);
+
+void advertirPorcentajeCapacidad(Parqueadero *parqueadero, int cantParqueaderos, int porcentajeOcupacion);
 
 int porcentajeOcupacion(Parqueadero *parqueadero, int cantParqueaderos);
 
