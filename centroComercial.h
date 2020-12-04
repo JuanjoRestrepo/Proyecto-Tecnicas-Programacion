@@ -64,3 +64,4 @@ void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos);
 
 void crearParqueadero();
 
+printf("\njaja\n");
