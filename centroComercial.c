@@ -321,7 +321,7 @@ void guardarArchivo(Local **mall, int pisos, int locales){
              fwrite( mall[i] , sizeof( Local ), locales, archivo);
         }
         fclose( archivo );
-        printf("\nArchivo guardado con exito!\n");
+        printf("\nSe guardaron %d registros con exito!\n", locales*pisos);
     }
     else{
         printf("\nERROR - No existen datos\n");
@@ -329,8 +329,8 @@ void guardarArchivo(Local **mall, int pisos, int locales){
     }
     
 }
-// 9:39 PM 12/3/2020
-//Cargar Archivos... Dar opcion de menu de si quiere o no cargar los viejos
+
+
 void cargarArchivo(Local **mall, int pisos, int locales){
 	int i;
 	FILE *archivo = fopen( "datosCentroComercial.dat" , "rb");
@@ -342,16 +342,42 @@ void cargarArchivo(Local **mall, int pisos, int locales){
              fread( mall[i] , sizeof( Local ), locales, archivo);
         }
         fclose( archivo );
-        printf("\nArchivo cargado con exito!\n");
+        printf("\nSe cargaron %d registros con exito!\n", locales*pisos);
     }
     else{
         printf("\nERROR - No existen datos\n");
         return;
     }
+    system("pause");
 	
+}
+
+void crearReporte(Local **mall, int pisos, int locales){
+	int i, j;
+	FILE *archivo = fopen( "Reporte.txt" , "wb");	
+	if(mall != NULL){
+		fprintf(archivo,"\n======== REPORTE ========\n");
+		fprintf( archivo, "========	  ========\n" );
+		for(i = 0; i < pisos; i++){
+			fprintf(archivo, "________________________\nPiso: %d", i);
+			for(j = 0; j < locales; j++){
+				fprintf(archivo, "\n\nNombre del local: %s", mall[i][j].nombre);
+				fprintf(archivo, "\nCodigo Postal: %d", mall[i][j].codigoPostal);
+				fprintf(archivo, "\nEstado: %d", mall[i][j].estado);
+				fprintf(archivo, "\nCosto de arriendo $: %d", mall[i][j].costoArriendo);
+			}
+			fprintf(archivo, "\n");
+		}
+		fprintf(archivo, "\n");
+		fclose(archivo);
+		printf("\n\nReporte creado exitosamente\n");		
+	}
+	else{
+		printf("\nMemoria Insuficiente\n");
+	}
 }	
 
-void menuCentroComercial(Local **centroComercial, int pisos, int locales){
+void menuCentroComercial(Local **mall, int pisos, int locales){
 	
 	int opcion;
 
@@ -360,9 +386,11 @@ void menuCentroComercial(Local **centroComercial, int pisos, int locales){
 		printf("1. Alquilar Piso\n");
 		printf("2. Mostrar Locales\n");
 		printf("3. Ordenar Por Costo De Arriendo\n");
-		printf("4. Crear Reporte\n");
-		printf("5. Modificar Locales\n");
-		printf("6. Modificar Estados\n");
+		printf("4. Guardar Archivos\n");
+		printf("5. Crear Reporte\n");
+		printf("6. Cargar Archivos\n");
+		printf("7. Modificar Nombre Locales\n");
+		printf("8. Desocupar Local\n");
 		printf("0. Salir\n");
 		printf("Que quieres: ");
 		scanf("%d", &opcion);
@@ -373,36 +401,46 @@ void menuCentroComercial(Local **centroComercial, int pisos, int locales){
 			
 			case 1:
 				system("cls");
-				alquilarLocal(centroComercial, pisos, locales);
+				alquilarLocal(mall, pisos, locales);
 				system("pause");
 				break;
 			
 			case 2:
 				system("cls");
-				mostrarDatosCentroComercial(centroComercial, pisos, locales);
+				mostrarDatosCentroComercial(mall, pisos, locales);
 				system("pause");
 				break;
 			
 			case 3:
 				system("cls");
-				ordenarPiso(centroComercial, pisos, locales);
+				ordenarPiso(mall, pisos, locales);
 				system("pause");
 				break;
 				
 			case 4:
-				guardarArchivo(centroComercial, pisos, locales);
+				guardarArchivo(mall, pisos, locales);
+				system("pause");
+				break;
+				
+			case 5://Crear Reporte txt
+				crearReporte(mall, pisos, locales);
+				system("pause");
+				break;
+				
+			case 6://Crear Reporte txt
+				cargarArchivo(mall, pisos, locales);
 				system("pause");
 				break;
 			
-			case 5:
+			case 7:
 				system("cls");
-				modificarInformacionLocales(centroComercial, pisos, locales);
+				modificarInformacionLocales(mall, pisos, locales);
 				system("pause");
 				break;
 			
-			case 6:
+			case 8:
 				system("cls");
-				modificarEstadoLocales(centroComercial, pisos, locales);
+				modificarEstadoLocales(mall, pisos, locales);
 				system("pause");
 				break;	
 			
@@ -414,7 +452,7 @@ void menuCentroComercial(Local **centroComercial, int pisos, int locales){
 	}while(opcion != 0);
 	
 	printf("\nCentro comercial Liberado\n");
-	free(centroComercial);
+	free(mall);
 }
 
 void crearCentroComercial(){
@@ -422,7 +460,8 @@ void crearCentroComercial(){
 	int locales; //Columnas
 	int i,j;
 	int codigosPostales = 0;
-	
+
+	Local **centroComercial;
 	do{
 		system("cls");
 		printf("\n*** Crear un Centro Comercial ***\n");
@@ -438,7 +477,7 @@ void crearCentroComercial(){
 		
 	}while(pisos <= 0 && locales <= 0);
 	
-	Local **centroComercial;
+
 	centroComercial = malloc( pisos * sizeof(Local ) );
 	if(centroComercial != NULL){
 		for(i = 0; i< pisos; i++){
@@ -465,7 +504,36 @@ void crearCentroComercial(){
 	inicializarCostoArriendo(centroComercial, pisos, locales);
 	
 	menuCentroComercial(centroComercial, pisos, locales);
+	
 }
+/*
+void empezarDesdeCero(Local **centroComercial, int pisos, int locales){
+	int empezarDeCero;
+	
+	do{
+		
+		printf("\nDesea iniciar un centro comercial desde cero?\n(Si = 1, No = 0): ");
+		scanf("%d", &empezarDeCero);
+		if(empezarDeCero != 0 && empezarDeCero != 1){
+			printf("\nOpcion no valida. Debe elegir 1 o 0\n");
+			system("pause");
+		}
+		system("cls");
+		
+	}while(empezarDeCero != 0 && empezarDeCero != 1);
+	
+	//Aqui toy 10:40 AM
+	if(empezarDeCero == 0){
+		printf("\nElegiste Cero\n");
+		system("pause");
+		//cargarArchivo(centroComercial, pisos, locales);
+		//menuCentroComercial(centroComercial, pisos, locales);
+	}
+	else{
+		crearCentroComercial();
+	}
+}*/
+
 
 // 	================================	PARQUEADERO 	================================
 
@@ -611,7 +679,6 @@ int porcentajeOcupacion(Parqueadero *parqueadero, int cantParqueaderos){
 	return porcentaje;
 }
 
-
 void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 	int opcion;
 
@@ -712,10 +779,12 @@ void menuGeneral(){
 				break;
 				
 			case 1:
+				
 				crearParqueadero();
 				break;
 				
 			case 2:
+				
 				crearCentroComercial();
 				break;
 				
