@@ -448,7 +448,7 @@ void crearCentroComercial(){
 
 // 	================================	PARQUEADERO 	================================
 
-void mostrarDatosParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
+void mostrarEstados(Parqueadero *parqueadero, int cantParqueaderos){
 	int i;
 	fflush(stdin);
 	if(parqueadero != NULL){
@@ -467,7 +467,7 @@ void mostrarDatosParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 }
 
 void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
-	int elegirParqueo, i, j, lugarDisponible;
+	int elegirParqueo, i, lugarDisponible, porcentajeOcupados;
 	int tipo = 0;	
 	
 	fflush(stdin);
@@ -503,7 +503,7 @@ void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 	}while(elegirParqueo >= cantParqueaderos || elegirParqueo < 0);
 	
 	lugarDisponible = 0;
-
+	
 	for(i = 0; i < cantParqueaderos; i++){
 		fflush(stdin);
 		
@@ -512,8 +512,10 @@ void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 			if(parqueadero[i].estado == LIBRE && parqueadero[i].IDParqueadero == elegirParqueo ){
 				lugarDisponible = 1;
 				parqueadero[i].estado = OCUPADO;
+				
 				printf("\nCarro ubicado exitosamente\n");
 				printf("Se ubica en el lugar #%d\n",parqueadero[i].IDParqueadero);
+				
 				break;
 			}
 			//Si esa ubicacion ya esta ocupada
@@ -532,8 +534,10 @@ void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 			if(parqueadero[i].estado == LIBRE && parqueadero[i].IDParqueadero == elegirParqueo){
 				lugarDisponible = 1;
 				parqueadero[i].estado = OCUPADO;
+				
 				printf("\nMoto ubicada exitosamente\n");
 				printf("Se ubica en el lugar #%d\n",parqueadero[i].IDParqueadero);
+				
 				break;
 			}
 			//Si esa ubicacion ya esta ocupada
@@ -549,19 +553,42 @@ void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 		}
 		
 	}
+	
 	if(lugarDisponible == 0){
-		printf("No se pudo ubicar su vehiculo\n\n");		
+		printf("No se pudo ubicar su vehiculo\n");		
 	}
 	
+	porcentajeOcupacion(parqueadero, cantParqueaderos);
+	
+	printf("\nPorcentaje de Ocupacion: %d %c\n", porcentajeOcupados, 37);
 }
+
+int porcentajeOcupacion(Parqueadero *parqueadero, int cantParqueaderos){
+	int i, lugaresOcupados = 0, porcentaje = 0;
+	fflush(stdin);
+	if(parqueadero != NULL){
+		for(i = 0; i < cantParqueaderos; i++){
+			if(parqueadero[i].estado == 1){
+				lugaresOcupados++;
+			}
+		}
+	}
+	else{
+		printf("\nMemoria Insuficiente\n");
+	}
+	porcentaje = (lugaresOcupados* 100)/cantParqueaderos;
+	return porcentaje;
+}
+
 
 void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 	int opcion;
 
 	do{
 		system("cls");
-		printf("1. Ingresar vehiculo\n");
-		printf("2. Mostrar Datos Parqueadero\n");
+		printf("1. Ingresar Vehiculo\n");
+		printf("2. Mostrar Estados de los Parqueaderos\n");
+
 		printf("0. Salir\n");
 		printf("Que quieres: ");
 		scanf("%d", &opcion);
@@ -578,10 +605,10 @@ void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 				
 			case 2:
 				system("cls");
-				mostrarDatosParqueadero(parqueadero, cantParqueaderos);
+				mostrarEstados(parqueadero, cantParqueaderos);
 				system("pause");
 				break;
-				
+					
 			default:
 				printf("\nOpcion no valida. Intente de nuevo\n");
 				system("pause");
