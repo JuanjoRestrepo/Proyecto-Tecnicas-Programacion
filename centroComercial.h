@@ -45,7 +45,9 @@ void guardarArchivo(Local **mall, int pisos, int locales);
 
 void cargarArchivo(Local **mall, int pisos, int locales);
 
-void crearReporte(Local **mall, int pisos, int locales);
+void crearReporteGeneral(Local **mall, int pisos, int locales);
+
+void reporteLocalesDisponibles(Local **mall, int pisos, int locales);
 
 void menuCentroComercial();
 
@@ -56,7 +58,7 @@ void crearCentroComercial();
 
 // PARQUEADERO
 
-void mostrarEstados(Parqueadero *parqueadero, int cantParqueaderos);
+void mostrarEstadosParqueadero(Parqueadero *parqueadero, int cantParqueaderos);
 
 void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos);
 
