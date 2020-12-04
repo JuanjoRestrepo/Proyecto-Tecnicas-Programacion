@@ -216,7 +216,7 @@ void modificarInformacionLocales(Local **mall, int pisos, int locales){
 		scanf("%d", &digitarCodPostal);
 		fflush(stdin);
 		for(j = 0; j <= localesOcupados; j++){
-		
+			//CONDICION PARA MODIFICAR EL NOMBRE: DEBE ESTAR OCUPADO (ESTADO = 1)
 			if(mall[pisoAModificar][j].estado == OCUPADO && mall[pisoAModificar][j].codigoPostal == digitarCodPostal){
 				printf("\nNombre nuevo del local %d [MAX 30]: ", j+1);
 				fflush(stdin);
@@ -310,48 +310,6 @@ void modificarEstadoLocales(Local **mall, int pisos, int locales){
 	
 }
 
-
-void guardarArchivo(Local **mall, int pisos, int locales){
-	int i;
-    FILE *archivo = fopen( "datosCentroComercial.dat" , "wb");
-    
-    if(mall != NULL){
-        fwrite(&pisos, sizeof(int), 1, archivo);
-        fwrite(&locales, sizeof(int), 1, archivo);
-        for(i = 0; i < pisos; i++){
-             fwrite( mall[i] , sizeof( Local ), locales, archivo);
-        }
-        fclose( archivo );
-        printf("\nSe guardaron %d registros con exito!\n", locales*pisos);
-    }
-    else{
-        printf("\nERROR - No existen datos\n");
-        return;
-    }
-    
-}
-
-void cargarArchivo(Local **mall, int pisos, int locales){
-	int i;
-	FILE *archivo = fopen( "datosCentroComercial.dat" , "rb");
-	
-	if(mall != NULL){
-        fread(&pisos, sizeof(int), 1, archivo);
-        fread(&locales, sizeof(int), 1, archivo);
-        for(i = 0; i < pisos; i++){
-             fread( mall[i] , sizeof( Local ), locales, archivo);
-        }
-        fclose( archivo );
-        printf("\nSe cargaron %d registros con exito!\n", locales*pisos);
-    }
-    else{
-        printf("\nERROR - No existen datos\n");
-        return;
-    }
-    system("pause");
-	
-}
-
 void crearReporteGeneral(Local **mall, int pisos, int locales){
 	int i, j;
 	FILE *archivo = fopen( "ReporteGeneral.txt" , "wb");	
@@ -417,9 +375,8 @@ void menuCentroComercial(Local **mall, int pisos, int locales){
 		printf("4. Guardar Archivos\n");
 		printf("5. Crear Reporte Locales Disponibles\n");
 		printf("6. Crear Reporte General\n");
-		printf("7. Cargar Archivos\n");
-		printf("8. Modificar Nombre Locales\n");
-		printf("9. Desocupar Local\n");
+		printf("7. Modificar Nombre Locales\n");
+		printf("8. Desocupar Local\n");
 		printf("0. Salir\n");
 		printf("Que quieres: ");
 		scanf("%d", &opcion);
@@ -464,19 +421,13 @@ void menuCentroComercial(Local **mall, int pisos, int locales){
 				system("pause");
 				break;
 			
-			case 7:
-				system("cls");
-				cargarArchivo(mall, pisos, locales);
-				system("pause");
-				break;
-			
-			case 8://Cambiar Nombre Locales
+			case 7://Cambiar Nombre Locales
 				system("cls");
 				modificarInformacionLocales(mall, pisos, locales);
 				system("pause");
 				break;	
 			
-			case 9://Desocupar Locales
+			case 8://Desocupar Locales
 				system("cls");
 				modificarEstadoLocales(mall, pisos, locales);
 				system("pause");
@@ -490,31 +441,97 @@ void menuCentroComercial(Local **mall, int pisos, int locales){
 	}while(opcion != 0);
 	
 	printf("\nCentro comercial Liberado\n");
+	system("pause");
 	free(mall);
 }
 
-void crearCentroComercial(){
-	int pisos; //Filas
-	int locales; //Columnas
-	int i,j;
-	int codigosPostales = 0;
+void guardarArchivo(Local **mall, int pisos, int locales){
+	int i;
+    FILE *archivo = fopen( "datosCentroComercial.dat" , "wb");
+    
+    if(mall != NULL){
+        fwrite(&pisos, sizeof(int), 1, archivo);
+        fwrite(&locales, sizeof(int), 1, archivo);
+        for(i = 0; i < pisos; i++){
+             fwrite( mall[i] , sizeof( Local ), locales, archivo);
+        }
+        fclose( archivo );
+        printf("\nSe guardaron %d registros con exito!\n", locales*pisos);
+    }
+    else{
+        printf("\nERROR - No existen datos\n");
+        return;
+    }
+    
+}
 
+void cargarONoDatosCentroComercial(){
+	FILE *archivo;
 	Local **centroComercial;
-	do{
-		system("cls");
-		printf("\n*** Crear un Centro Comercial ***\n");
-		printf("Numeros de pisos: ");
-		scanf("%d", &pisos);
-		printf("Numeros de locales por piso: ");
-		scanf("%d", &locales);
+	
+	int opcion, i,j;
+	int pisos, locales;
+	
+	
+	system("cls");
+	printf("Desea crear un nuevo centro comercial o cargar uno ya existente?\n");
+	printf("1. Crear nuevo centro comercial\n2. Cargar centro comercial\n");
+	scanf("%d",&opcion);	
+	
+	printf("\nUsted eligio la opcion #%d\n", opcion);
+	system("pause");
+	if(opcion == 1){
+		do{
+			system("cls");
+			printf("\n*** Crear un Centro Comercial ***\n");
+			printf("Numeros de pisos: ");
+			scanf("%d", &pisos);
+			printf("Numeros de locales por piso: ");
+			scanf("%d", &locales);
+			
+			if(pisos <= 0 && locales <= 0){
+				printf("Las cantidades deben ser positivas\nIntente nuevamente\n\n");
+				system("pause");
+			}
+			
+		}while(pisos <= 0 && locales <= 0);
 		
-		if(pisos <= 0 && locales <= 0){
-			printf("Las cantidades deben ser positivas\nIntente nuevamente\n\n");
-			system("pause");
+		
+		llenarDatosCentroComercial(centroComercial, pisos, locales);
+	}
+	else if(opcion == 2){
+		//CARGAR LOS ARCHIVOS EXISTENTES
+		archivo = fopen( "datosCentroComercial.dat" , "rb");
+        fread(&pisos, sizeof(int), 1, archivo);
+        fread(&locales, sizeof(int), 1, archivo);
+        
+        centroComercial = malloc( pisos * sizeof(Local ) );
+        
+		for(i = 0; i < pisos; i++){
+			centroComercial[i] = malloc( locales * sizeof(Local ) );
 		}
 		
-	}while(pisos <= 0 && locales <= 0);
+		for(i = 0; i < pisos; i++){
+			for(j = 0; j < pisos; j++){
+				fread( &centroComercial[i][j], sizeof(Local), 1, archivo);
+			}
+		}
+		
+        fclose( archivo );
+        printf("\nSe cargaron %d registros con exito!\n", locales*pisos);
+	    printf("Pisos: %d\nLocales: %d\n", pisos, locales);
+	    
+	    system("pause");
+	    menuCentroComercial(centroComercial, pisos, locales);
+	}
 	
+	
+}
+
+void llenarDatosCentroComercial(Local **centroComercial, int pisos, int locales){
+	 //Columnas
+	int i,j;
+	int codigosPostales = 0;
 
 	centroComercial = malloc( pisos * sizeof(Local ) );
 	if(centroComercial != NULL){
