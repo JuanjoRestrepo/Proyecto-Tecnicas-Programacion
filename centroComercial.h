@@ -16,9 +16,7 @@ typedef struct Local{
 	
 }Local;
 
-void menuGeneral();
-
-//				MALL
+// 	================================	CENTRO COMERCIAL		================================
 
 void mostrarDatosCentroComercial(Local **mall, int pisos, int locales);
 
@@ -34,17 +32,16 @@ void modificarInformacionLocales(Local **mall, int pisos, int locales);
 
 void modificarEstadoLocales(Local **mall, int pisos, int locales);
 
-void guardarArchivo(Local **mall, int pisos, int locales);
-
-void cargarArchivo(Local **mall, int pisos, int locales);
-
 void crearReporteGeneral(Local **mall, int pisos, int locales);
 
 void reporteLocalesDisponibles(Local **mall, int pisos, int locales);
 
-void aumentarCapacidad(Local **mall, int pisos, int locales);
-
 void menuCentroComercial();
 
-void crearCentroComercial();
+void guardarArchivo(Local **mall, int pisos, int locales);
+
+void cargarONoDatosCentroComercial();
+
+void llenarDatosCentroComercial(Local **centroComercial, int pisos, int locales);
+
 
