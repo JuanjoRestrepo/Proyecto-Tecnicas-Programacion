@@ -128,6 +128,26 @@ void mostrarCostosArriendoDescendentemente(Local **mall, int pisos, int locales,
 	}
 }
 
+void swap(Local **mall, int pos1, int pos2, int piso){
+	Local temp;
+	
+	strcpy(temp.nombre, mall[piso][pos1].nombre);
+	temp.codigoPostal = mall[piso][pos1].codigoPostal;
+	temp.estado = mall[piso][pos1].estado;
+	temp.costoArriendo = mall[piso][pos1].costoArriendo;
+	
+	strcpy(mall[piso][pos1].nombre, mall[piso][pos2].nombre);
+	mall[piso][pos1].codigoPostal = mall[piso][pos2].codigoPostal;
+	mall[piso][pos1].estado = mall[piso][pos2].estado;
+	mall[piso][pos1].costoArriendo = mall[piso][pos2].costoArriendo;
+	
+	strcpy(mall[piso][pos2].nombre, temp.nombre);
+	mall[piso][pos2].codigoPostal = temp.codigoPostal;
+	mall[piso][pos2].estado = temp.estado;
+	mall[piso][pos2].costoArriendo = temp.costoArriendo;
+	
+}
+
 void ordenarPiso(Local **mall, int pisos, int locales){
 	int elegirPiso, i, j, pos;
 	
@@ -146,6 +166,23 @@ void ordenarPiso(Local **mall, int pisos, int locales){
 	}while(elegirPiso >= pisos || elegirPiso < 0);
 	
 	fflush(stdin);
+	
+	/*int posMinima;
+	
+	//Algortimo Ordenamiento por Seleccion
+	for(i = 0; i < pisos; i++){
+		posMinima = i;
+		for(j = i+1; j < locales; j++){
+			if(mall[elegirPiso][j].costoArriendo > mall[elegirPiso][posMinima].costoArriendo ){
+				posMinima = j;
+			}
+			if( i != posMinima){
+				swap(mall, i, posMinima, elegirPiso);
+			}
+		}
+	}
+	mostrarDatosCentroComercial(mall, elegirPiso+1, locales);*/
+	
 	int temp;
 	
 	//Algortimo Ordenamiento por Insercion
@@ -161,7 +198,9 @@ void ordenarPiso(Local **mall, int pisos, int locales){
 		mall[elegirPiso][pos].costoArriendo = temp;
 	}
 	
-	mostrarCostosArriendoDescendentemente(mall, pisos, locales, elegirPiso);
+	system("cls");
+	printf("\nOrdenamiento Exitoso\n");
+	mostrarDatosCentroComercial(mall, elegirPiso+1, locales);
 	
 }
 
@@ -404,7 +443,7 @@ void menuCentroComercial(Local **mall, int pisos, int locales){
 				break;
 				
 			case 4:
-				
+				//Poner al final del ciclo do while
 				guardarArchivo(mall, pisos, locales);
 				system("pause");
 				break;
@@ -509,13 +548,16 @@ void cargarONoDatosCentroComercial(){
         
 		for(i = 0; i < pisos; i++){
 			centroComercial[i] = malloc( locales * sizeof(Local ) );
-		}
-		
-		for(i = 0; i < pisos; i++){
 			for(j = 0; j < pisos; j++){
 				fread( &centroComercial[i][j], sizeof(Local), 1, archivo);
 			}
 		}
+		/*
+		for(i = 0; i < pisos; i++){
+			for(j = 0; j < pisos; j++){
+				fread( &centroComercial[i][j], sizeof(Local), 1, archivo);
+			}
+		}*/
 		
         fclose( archivo );
         printf("\nSe cargaron %d registros con exito!\n", locales*pisos);
