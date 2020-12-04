@@ -45,9 +45,13 @@ void guardarArchivo(Local **mall, int pisos, int locales);
 
 void cargarArchivo(Local **mall, int pisos, int locales);
 
+void crearReporte(Local **mall, int pisos, int locales);
+
 void menuCentroComercial();
 
 void crearCentroComercial();
+
+//void empezarDesdeCero(Local **centroComercial, int pisos, int locales);
 
 
 // PARQUEADERO
@@ -64,4 +68,3 @@ void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos);
 
 void crearParqueadero();
 
-printf("\njaja\n");
