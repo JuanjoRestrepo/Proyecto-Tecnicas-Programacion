@@ -310,7 +310,7 @@ void modificarEstadoLocales(Local **mall, int pisos, int locales){
 	
 }
 
-void guardar(Local **mall, int pisos, int locales){
+void guardarArchivo(Local **mall, int pisos, int locales){
 	int i;
     FILE *archivo = fopen( "datosCentroComercial.dat" , "wb");
     
@@ -328,6 +328,25 @@ void guardar(Local **mall, int pisos, int locales){
         return;
     }
     
+}
+
+void cargarArchivo(Local **mall, int pisos, int locales){
+	FILE *archivo = fopen( "datosCentroComercial.dat" , "rb");
+	
+	if(mall != NULL){
+        fread(&pisos, sizeof(int), 1, archivo);
+        fread(&locales, sizeof(int), 1, archivo);
+        for(i = 0; i < pisos; i++){
+             fread( mall[i] , sizeof( Local ), locales, archivo);
+        }
+        fclose( archivo );
+        printf("\nArchivo cargado con exito!\n");
+    }
+    else{
+        printf("\nERROR - No existen datos\n");
+        return;
+    }
+	
 }	
 
 void menuCentroComercial(Local **centroComercial, int pisos, int locales){
@@ -369,7 +388,7 @@ void menuCentroComercial(Local **centroComercial, int pisos, int locales){
 				break;
 				
 			case 4:
-				guardar(centroComercial, pisos, locales);
+				guardarArchivo(centroComercial, pisos, locales);
 				system("pause");
 				break;
 			
@@ -558,9 +577,19 @@ void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 		printf("No se pudo ubicar su vehiculo\n");		
 	}
 	
-	porcentajeOcupacion(parqueadero, cantParqueaderos);
+	porcentajeOcupados = porcentajeOcupacion(parqueadero, cantParqueaderos);
 	
-	printf("\nPorcentaje de Ocupacion: %d %c\n", porcentajeOcupados, 37);
+	printf("\nPorcentaje de Ocupacion: %d%c\n", porcentajeOcupados, 37);
+	
+	advertirPorcentajeCapacidad(parqueadero,cantParqueaderos, porcentajeOcupados);
+}
+
+void advertirPorcentajeCapacidad(Parqueadero *parqueadero, int cantParqueaderos, int porcentajeOcupacion){
+	if(porcentajeOcupacion >= 80){
+		printf("ADVERTENCIA. El limite de ocupacion esta por encima del 80%c\n", 37);
+		system("pause");
+		parqueadero = realloc(parqueadero, sizeof(Parqueadero) * cantParqueaderos+1 );
+	}
 }
 
 int porcentajeOcupacion(Parqueadero *parqueadero, int cantParqueaderos){
