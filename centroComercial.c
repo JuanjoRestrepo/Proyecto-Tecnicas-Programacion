@@ -329,8 +329,10 @@ void guardarArchivo(Local **mall, int pisos, int locales){
     }
     
 }
-
+// 9:39 PM 12/3/2020
+//Cargar Archivos... Dar opcion de menu de si quiere o no cargar los viejos
 void cargarArchivo(Local **mall, int pisos, int locales){
+	int i;
 	FILE *archivo = fopen( "datosCentroComercial.dat" , "rb");
 	
 	if(mall != NULL){
@@ -691,6 +693,7 @@ void crearParqueadero(){
 	
 	menuParqueadero(parqueadero, cantParqueaderos);
 }
+
 
 void menuGeneral(){
 	int opcion;
