@@ -5,7 +5,7 @@
 typedef enum{ 
 	LIBRE, //0
 	OCUPADO //1 
-}estadoLocal, estadoParqueadero;
+}estadoLocal;
 
 typedef struct Local{
 	char nombre[30];
@@ -15,13 +15,6 @@ typedef struct Local{
 	int costoArriendo;
 	
 }Local;
-
-typedef struct parking{
-	int IDParqueadero;
-	char tipoVehiculo[10];
-	estadoParqueadero estado;
-	
-}Parqueadero;
 
 void menuGeneral();
 
@@ -49,24 +42,9 @@ void crearReporteGeneral(Local **mall, int pisos, int locales);
 
 void reporteLocalesDisponibles(Local **mall, int pisos, int locales);
 
+void aumentarCapacidad(Local **mall, int pisos, int locales);
+
 void menuCentroComercial();
 
 void crearCentroComercial();
-
-//void empezarDesdeCero(Local **centroComercial, int pisos, int locales);
-
-
-// PARQUEADERO
-
-void mostrarEstadosParqueadero(Parqueadero *parqueadero, int cantParqueaderos);
-
-void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos);
-
-void advertirPorcentajeCapacidad(Parqueadero *parqueadero, int cantParqueaderos, int porcentajeOcupacion);
-
-int porcentajeOcupacion(Parqueadero *parqueadero, int cantParqueaderos);
-
-void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos);
-
-void crearParqueadero();
 
