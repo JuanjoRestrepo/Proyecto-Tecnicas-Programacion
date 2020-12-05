@@ -1,5 +1,9 @@
 #include"centroComercial.h"
 
+// NOMBRE:  JUAN JOSE RESTREPO ROSERO
+// PROYECTO FINAL DE TECNICAS Y PRACTICAS DE PROGRAMACION
+// CALI, COLOMBIA. DICIEMBRE 4 DEL 2020
+// PONTIFICIA UNIVERSIDAD JAVERIANA CALI
 // 	================================	CENTRO COMERCIAL		================================
 
 void mostrarDatosCentroComercial(Local **mall, int pisos, int locales){
