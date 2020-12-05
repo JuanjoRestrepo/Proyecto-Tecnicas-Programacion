@@ -22,6 +22,8 @@ void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos);
 
 void advertirPorcentajeCapacidad(Parqueadero *parqueadero, int cantParqueaderos, int porcentajeOcupacion);
 
+void adicionarEspacios(Parqueadero *parqueadero, int *cantParqueaderos);
+
 int porcentajeOcupacion(Parqueadero *parqueadero, int cantParqueaderos);
 
 void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos);
