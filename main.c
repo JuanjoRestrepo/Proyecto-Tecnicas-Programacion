@@ -1,4 +1,5 @@
 #include"centroComercial.h"
+#include"parqueadero.h"
 
 // NOMBRE:  JUAN JOSE RESTREPO ROSERO
 // PROYECTO FINAL DE TECNICAS Y PRACTICAS DE PROGRAMACION
