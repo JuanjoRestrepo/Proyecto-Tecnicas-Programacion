@@ -411,11 +411,10 @@ void menuCentroComercial(Local **mall, int pisos, int locales){
 		printf("1. Alquilar Piso\n");
 		printf("2. Mostrar Locales\n");
 		printf("3. Ordenar Por Costo De Arriendo\n");
-		printf("4. Guardar Archivos\n");
-		printf("5. Crear Reporte Locales Disponibles\n");
-		printf("6. Crear Reporte General\n");
-		printf("7. Modificar Nombre Locales\n");
-		printf("8. Desocupar Local\n");
+		printf("4. Crear Reporte Locales Disponibles\n");
+		printf("5. Crear Reporte General\n");
+		printf("6. Modificar Nombre Locales\n");
+		printf("7. Desocupar Local\n");
 		printf("0. Salir\n");
 		printf("Que quieres: ");
 		scanf("%d", &opcion);
@@ -442,31 +441,25 @@ void menuCentroComercial(Local **mall, int pisos, int locales){
 				system("pause");
 				break;
 				
-			case 4:
-				//Poner al final del ciclo do while
-				guardarArchivo(mall, pisos, locales);
-				system("pause");
-				break;
-				
-			case 5://Crear Reporte Locales Disponibles txt
+			case 4://Crear Reporte Locales Disponibles txt
 				
 				reporteLocalesDisponibles(mall, pisos, locales);
 				system("pause");
 				break;
 				
-			case 6://Crear Reporte txt General
+			case 5://Crear Reporte txt General
 				
 				crearReporteGeneral(mall, pisos, locales);
 				system("pause");
 				break;
 			
-			case 7://Cambiar Nombre Locales
+			case 6://Cambiar Nombre Locales
 				system("cls");
 				modificarInformacionLocales(mall, pisos, locales);
 				system("pause");
 				break;	
 			
-			case 8://Desocupar Locales
+			case 7://Desocupar Locales
 				system("cls");
 				modificarEstadoLocales(mall, pisos, locales);
 				system("pause");
@@ -478,7 +471,10 @@ void menuCentroComercial(Local **mall, int pisos, int locales){
 		}
 		
 	}while(opcion != 0);
+	printf("\n");
+	guardarArchivo(mall, pisos, locales);
 	
+	system("pause");
 	printf("\nCentro comercial Liberado\n");
 	system("pause");
 	free(mall);
