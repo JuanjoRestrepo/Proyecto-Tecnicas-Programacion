@@ -6,14 +6,28 @@ void mostrarEstadosParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 	int i;
 	fflush(stdin);
 	if(parqueadero != NULL){
-		printf("ESTADOS\nLIBRE = 0  OCUPADO = 1\nPares: CARROS   IMPARES: MOTOS");
+		//printf("ESTADOS\nLIBRE = 0  OCUPADO = 1\nPares: CARROS   IMPARES: MOTOS");
+		printf("\n________________________________________________\n");
+		printf("\n		PARQUEADEROS DISPONIBLES\n");
+		printf("\n________________________________________________\n");
 		for(i = 0; i < cantParqueaderos; i++){
-			printf("\n\nID: %d", parqueadero[i].IDParqueadero);
-			printf("\nTipo de vehiculo: %s", parqueadero[i].tipoVehiculo);
-			printf("\nEstado: %d", parqueadero[i].estado);
-			
+			if(parqueadero[i].estado == 0){
+				printf("\n\nID: %d", parqueadero[i].IDParqueadero);
+				printf("\nTipo de vehiculo: %s", parqueadero[i].tipoVehiculo);
+				printf("\nEstado: %d", parqueadero[i].estado);
+			}
 		}
-		printf("\n");
+		printf("\n\n________________________________________________\n");
+		printf("\n		PARQUEADEROS OCUPADOS\n");
+		printf("\n________________________________________________\n");
+		for(i = 0; i < cantParqueaderos; i++){
+			if(parqueadero[i].estado == 1){
+				printf("\n\nID: %d", parqueadero[i].IDParqueadero);
+				printf("\nTipo de vehiculo: %s", parqueadero[i].tipoVehiculo);
+				printf("\nEstado: %d", parqueadero[i].estado);
+			}
+		}
+		printf("\n\n");
 	}
 	else{
 		printf("\nMemoria Insuficiente\n");
@@ -21,7 +35,7 @@ void mostrarEstadosParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 }
 
 void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
-	int elegirParqueo, i, lugarDisponible, porcentajeOcupados;
+	int elegirParqueo, i, lugarDisponible;
 	int tipo = 0;	
 	
 	fflush(stdin);
@@ -112,23 +126,41 @@ void ingresarVehiculo(Parqueadero *parqueadero, int cantParqueaderos){
 		printf("No se pudo ubicar su vehiculo\n");		
 	}
 	
-	porcentajeOcupados = porcentajeOcupacion(parqueadero, cantParqueaderos);
+	porcentajeOcupacion(parqueadero, cantParqueaderos);
 	
-	printf("\nPorcentaje de Ocupacion: %d%c\n", porcentajeOcupados, 37);
-	
-	advertirPorcentajeCapacidad(parqueadero,cantParqueaderos, porcentajeOcupados);
 }
 
-void advertirPorcentajeCapacidad(Parqueadero *parqueadero, int cantParqueaderos, int porcentajeOcupacion){
-	if(porcentajeOcupacion >= 80){
-		printf("ADVERTENCIA. El limite de ocupacion esta por encima del 80%c\n", 37);
-		system("pause");
-		parqueadero = realloc(parqueadero, sizeof(Parqueadero) * cantParqueaderos+1 );
+void adicionarEspacios(Parqueadero *parqueadero, int *cantParqueaderos){
+	int i, j, adicionar = 0;
+	char carro[]= "CARRO";
+	char moto[]= "MOTO";
+	
+	printf( "\nCuantos espacios deseas adicionar al parqueadero?: " ); 
+	scanf( "%d", &adicionar );
+	
+	*cantParqueaderos += adicionar;
+	
+	parqueadero = (Parqueadero*) realloc(parqueadero, *cantParqueaderos * sizeof(Parqueadero));
+	
+	if(parqueadero != NULL){
+		for(i = 0; i < *cantParqueaderos; i++){
+			parqueadero[i].IDParqueadero = i;
+			if(parqueadero[i].IDParqueadero % 2 == 0){
+				strcpy(parqueadero[i].tipoVehiculo, carro);
+			}
+			else{
+				strcpy(parqueadero[i].tipoVehiculo, moto);
+			}
+			
+			parqueadero[i].estado = Libre;
+		}
+		printf("\nSe han adicionado %d parqueaderos correctamente\n", adicionar);
 	}
+	printf("\nTotal parqueaderos: %d\n", *cantParqueaderos);
 }
 
 int porcentajeOcupacion(Parqueadero *parqueadero, int cantParqueaderos){
-	int i, lugaresOcupados = 0, porcentaje = 0;
+	int i, lugaresOcupados = 0, porcentajeOcupacion = 0;
 	fflush(stdin);
 	if(parqueadero != NULL){
 		for(i = 0; i < cantParqueaderos; i++){
@@ -140,8 +172,13 @@ int porcentajeOcupacion(Parqueadero *parqueadero, int cantParqueaderos){
 	else{
 		printf("\nMemoria Insuficiente\n");
 	}
-	porcentaje = (lugaresOcupados* 100)/cantParqueaderos;
-	return porcentaje;
+	porcentajeOcupacion = (lugaresOcupados* 100)/cantParqueaderos;
+	
+	if(porcentajeOcupacion > 80){
+		printf("ADVERTENCIA. El limite de ocupacion esta por encima del 80%c\n", 37);
+		system("pause");
+	}
+	
 }
 
 void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
@@ -151,7 +188,7 @@ void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 		system("cls");
 		printf("1. Ingresar Vehiculo\n");
 		printf("2. Mostrar Estados de los Parqueaderos\n");
-
+		printf("3. Adicionar espacios\n");
 		printf("0. Salir\n");
 		printf("Que quieres: ");
 		scanf("%d", &opcion);
@@ -171,7 +208,12 @@ void menuParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
 				mostrarEstadosParqueadero(parqueadero, cantParqueaderos);
 				system("pause");
 				break;
-					
+			
+			case 3:
+				system("cls");
+				adicionarEspacios(parqueadero, &cantParqueaderos);
+				system("pause");
+				break;
 			default:
 				printf("\nOpcion no valida. Intente de nuevo\n");
 				system("pause");
@@ -224,8 +266,4 @@ void crearParqueadero(){
 	system("pause");
 	
 	menuParqueadero(parqueadero, cantParqueaderos);
-}
-
-void aumentarCapacidadParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
-	
 }
