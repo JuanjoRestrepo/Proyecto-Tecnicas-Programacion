@@ -1,5 +1,9 @@
 #include"parqueadero.h"
 
+// NOMBRE:  JUAN JOSE RESTREPO ROSERO
+// PROYECTO FINAL DE TECNICAS Y PRACTICAS DE PROGRAMACION
+// CALI, COLOMBIA. DICIEMBRE 4 DEL 2020
+// PONTIFICIA UNIVERSIDAD JAVERIANA CALI
 // 	================================	PARQUEADERO 	================================
 
 void mostrarEstadosParqueadero(Parqueadero *parqueadero, int cantParqueaderos){
