@@ -1,0 +1,23 @@
+por valor: mando copia
+El cambio es temporal
+Ej: ( cubeByReference(int n))
+
+int main()
+	int number = 5;
+	cubeByReference(number);
+
+
+por referencia: mando la direccion de memoria
+el cambio es para siempre
+
+Ej: ( cubeByReference(int *n))
+
+
+void cubeByReference(int *n){
+	*n = (*n) * (*n) * (*n);
+	return n;
+}
+
+int main()
+	int number = 5;
+	cubeByReference(int &number)
